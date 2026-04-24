@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E8C361" />
+            <stop offset="100%" stop-color="#B8942E" />
+        </linearGradient>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.3" />
+        </filter>
+    </defs>
+    <!-- Classic Commercial Airplane -->
+    <path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-11.6 6.5-18.1 4.7L265.4 148.6 103.5 310.5l90.3 36.4c5.3 2.1 9.4 6.6 11 12.1l17 56.6c2.8 9.3-5.2 18-14.5 15.9l-114-25.5-56 56c-6.2 6.2-16.4 6.2-22.6 0-6.2-6.2-6.2-16.4 0-22.6l56-56-25.5-114c-2.1-9.3 6.6-17.3 15.9-14.5l56.6 17c5.5 1.6 10 5.7 12.1 11l36.4 90.3 161.9-161.9-44.3-168.3c-1.8-6.5 0-13.4 4.7-18.1l46.1-46.1c5.9-5.9 15.6-5.4 21 .1l102.5 102.5c5.5 5.4 6 15.1 .1 21z" fill="url(#goldGradient)" filter="url(#shadow)"/>
+</svg>

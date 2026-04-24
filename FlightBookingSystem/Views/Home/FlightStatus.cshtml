@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Flight Status";
+}
+
+<section class="section-pad">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">Real-time Tracking</span>
+            <h2 class="section-title">Flight <span class="text-accent">Status</span></h2>
+            <p class="section-subtitle">Check the current status of any AeroFly flight worldwide.</p>
+        </div>
+        
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-6">
+                <div class="search-card">
+                    <form>
+                        <div class="mb-4">
+                            <label class="search-label">Flight Number</label>
+                            <input type="text" class="search-input" placeholder="e.g. AF123">
+                        </div>
+                        <div class="mb-4">
+                            <label class="search-label">Date</label>
+                            <input type="date" class="search-input" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                        </div>
+                        <button type="submit" class="btn-search-primary w-100 justify-content-center">Check Status</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
