@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-// =============================================
+
 // 1. REGISTER VIEW MODEL
-// =============================================
+
 public class RegisterViewModel
 {
     [Required(ErrorMessage = "First name is required.")]
@@ -33,9 +33,9 @@ public class RegisterViewModel
     public string ConfirmPassword { get; set; } = null!;
 }
 
-// =============================================
+
 // 2. LOGIN VIEW MODEL
-// =============================================
+
 public class LoginViewModel
 {
     [Required(ErrorMessage = "Email is required.")]
@@ -52,9 +52,9 @@ public class LoginViewModel
     public bool RememberMe { get; set; }
 }
 
-// =============================================
+
 // 3. FORGOT PASSWORD VIEW MODEL
-// =============================================
+
 public class ForgotPasswordViewModel
 {
     [Required(ErrorMessage = "Email is required.")]
@@ -63,9 +63,9 @@ public class ForgotPasswordViewModel
     public string Email { get; set; } = null!;
 }
 
-// =============================================
+
 // 4. RESET PASSWORD VIEW MODEL
-// =============================================
+
 public class ResetPasswordViewModel
 {
     [Required]
@@ -88,9 +88,9 @@ public class ResetPasswordViewModel
     public string ConfirmPassword { get; set; } = null!;
 }
 
-// =============================================
+
 // 5. CONFIRM EMAIL VIEW MODEL
-// =============================================
+
 public class ConfirmEmailViewModel
 {
     public string Email { get; set; } = null!;
@@ -98,9 +98,9 @@ public class ConfirmEmailViewModel
     public string Message { get; set; } = null!;
 }
 
-// =============================================
+
 // 6. OTP VALIDATE VIEW MODEL
-// =============================================
+
 public class OtpViewModel
 {
     [Required(ErrorMessage = "OTP code is required.")]
