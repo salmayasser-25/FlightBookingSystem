@@ -1,0 +1,98 @@
+﻿@model Flight
+
+@{
+    ViewData["Title"] = "Add Flight";
+    ViewData["PageId"] = "flights";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold">Add New Flight</h4>
+
+        <a href="/Admin/Flight" class="btn btn-light rounded-pill px-4">
+            Back
+        </a>
+       
+    </div>
+
+    <!-- FORM -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <form asp-action="Create" method="post" class="row g-3">
+
+                <!-- Flight Number -->
+                <div class="col-md-6">
+                    <label class="form-label">Flight Number</label>
+                    <input asp-for="FlightNum" class="form-control" />
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6">
+                    <label class="form-label">Status</label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Active">Active</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <!-- Departure Airport -->
+                <div class="col-md-6">
+                    <label class="form-label">Departure Airport</label>
+                    <select asp-for="DepartureAirportId"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Airports, "AirportId", "Name"))">
+                        <option value="">Select Airport</option>
+                    </select>
+                </div>
+
+                <!-- Arrival Airport -->
+                <div class="col-md-6">
+                    <label class="form-label">Arrival Airport</label>
+                    <select asp-for="ArrivalAirportId"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Airports, "AirportId", "Name"))">
+                        <option value="">Select Airport</option>
+                    </select>
+                </div>
+
+                <!-- Departure Time -->
+                <div class="col-md-6">
+                    <label class="form-label">Departure Time</label>
+                    <input asp-for="DepartureTime" type="datetime-local" class="form-control" />
+                </div>
+
+                <!-- Arrival Time -->
+                <div class="col-md-6">
+                    <label class="form-label">Arrival Time</label>
+                    <input asp-for="ArrivalTime" type="datetime-local" class="form-control" />
+                </div>
+
+                <!-- Base Price -->
+                <div class="col-md-6">
+                    <label class="form-label">Base Price ($)</label>
+                    <input asp-for="BasePrice" type="number" step="0.01" class="form-control" />
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+
+                    <a href="/Admin/Flight" class="btn btn-light rounded-pill px-4">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-dark rounded-pill px-4">
+                        Save Flight
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,79 @@
+﻿@model Airport
+
+@{
+    ViewData["Title"] = "Add Airport";
+    ViewData["PageId"] = "airports";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-body p-4">
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Add New Airport</h4>
+
+                <a href="/Admin/Airport" class="btn btn-light rounded-pill px-4">
+                    <i class="bi bi-arrow-left me-1"></i> Back
+                </a>
+            </div>
+
+            <!-- FORM -->
+            <form method="post" action="/Admin/Airport/Create">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Airport Name</label>
+                        <input name="Name" class="form-control rounded-3" placeholder="Heathrow Airport" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">IATA Code</label>
+                        <input name="IataCode" class="form-control rounded-3 text-uppercase" placeholder="LHR" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input name="City" class="form-control rounded-3" placeholder="London" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Country</label>
+                        <input name="Country" class="form-control rounded-3" placeholder="United Kingdom" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Latitude</label>
+                        <input name="Latitude" type="number" step="any" class="form-control rounded-3" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Longitude</label>
+                        <input name="Longitude" type="number" step="any" class="form-control rounded-3" />
+                    </div>
+
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <a href="/Admin/Airport" class="btn btn-light rounded-pill px-4">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-dark rounded-pill px-4">
+                        <i class="bi bi-check2-circle me-1"></i> Save Airport
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
