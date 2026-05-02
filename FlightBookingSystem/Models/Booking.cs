@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace FlightBookingSystem.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 
 public class Booking

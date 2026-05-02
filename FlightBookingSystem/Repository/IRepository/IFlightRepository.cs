@@ -1,4 +1,17 @@
-﻿namespace FlightBookingSystem.Repository.IRepository
+﻿//namespace FlightBookingSystem.Repository.IRepository
+//{
+//    public interface IFlightRepository : IRepository<Flight>
+//    {
+//        Task<List<Flight>> SearchFlights(string from, string to, DateTime date, int classId);
+//        Task<Flight?> GetFlightDetails(int id);
+//        Task<int> GetAvailableSeats(int flightId, int classId);
+//    }
+//}
+using FlightBookingSystem.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
+namespace FlightBookingSystem.Repository.IRepository
 {
     public interface IFlightRepository : IRepository<Flight>
     {

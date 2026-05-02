@@ -1,4 +1,5 @@
-﻿public class FlightSeatClass
+﻿namespace FlightBookingSystem.Models;
+public class FlightSeatClass
 {
     public int FlightId { get; set; }
     public int ClassId { get; set; }

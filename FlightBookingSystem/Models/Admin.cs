@@ -1,4 +1,5 @@
-﻿public class Admin
+﻿namespace FlightBookingSystem.Models;
+public class Admin
 {
     public int AdminId { get; set; }
     public int UserId { get; set; }
