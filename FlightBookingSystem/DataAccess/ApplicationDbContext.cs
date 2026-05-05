@@ -22,14 +22,14 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        base.OnModelCreating(modelBuilder); 
+
         modelBuilder.Entity<FlightSeatClass>()
             .HasKey(f => new { f.FlightId, f.ClassId });
 
         modelBuilder.Entity<FlightRule>()
             .HasKey(f => new { f.FlightId, f.RuleId });
 
-        
         modelBuilder.Entity<Flight>()
             .HasOne(f => f.DepartureAirport)
             .WithMany(a => a.DepartureFlights)
@@ -42,50 +42,53 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(f => f.ArrivalAirportId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        
         modelBuilder.Entity<Passenger>()
             .HasOne(p => p.FlightSeatClass)
             .WithMany(f => f.Passengers)
             .HasForeignKey(p => new { p.FlightId, p.ClassId });
 
-       
         modelBuilder.Entity<Admin>()
             .HasOne(a => a.User)
             .WithOne(u => u.Admin)
             .HasForeignKey<Admin>(a => a.UserId);
 
-       
         modelBuilder.Entity<RewardAccount>()
             .HasOne(r => r.User)
             .WithOne(u => u.RewardAccount)
             .HasForeignKey<RewardAccount>(r => r.UserId);
 
-        
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.Booking)
             .WithMany(b => b.Tickets)
             .HasForeignKey(t => t.BookingId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.Passenger)
             .WithOne(p => p.Ticket)
             .HasForeignKey<Ticket>(t => t.PassengerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        
-        modelBuilder.Entity<Flight>()
-            .Property(f => f.BasePrice).HasPrecision(10, 2);
-        modelBuilder.Entity<FlightSeatClass>()
-            .Property(f => f.FinalPrice).HasPrecision(10, 2);
-        modelBuilder.Entity<PriceRule>()
-            .Property(p => p.Multiplier).HasPrecision(5, 2);
+        // 🔥 أهم جزء (حل المشكلة)
         modelBuilder.Entity<Booking>()
-            .Property(b => b.TotalPrice).HasPrecision(10, 2);
-        modelBuilder.Entity<Payment>()
-            .Property(p => p.Amount).HasPrecision(10, 2);
-        modelBuilder.Entity<SeatClass>()
-            .Property(s => s.ClassMultiplier).HasPrecision(5, 2);
+            .HasOne(b => b.Flight)
+            .WithMany()
+            .HasForeignKey(b => b.FlightId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Booking>()
+            .HasOne(b => b.User)
+            .WithMany(u => u.Bookings)
+            .HasForeignKey(b => b.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        // precision
+        modelBuilder.Entity<Flight>().Property(f => f.BasePrice).HasPrecision(10, 2);
+        modelBuilder.Entity<FlightSeatClass>().Property(f => f.FinalPrice).HasPrecision(10, 2);
+        modelBuilder.Entity<PriceRule>().Property(p => p.Multiplier).HasPrecision(5, 2);
+        modelBuilder.Entity<Booking>().Property(b => b.TotalPrice).HasPrecision(10, 2);
+        modelBuilder.Entity<Payment>().Property(p => p.Amount).HasPrecision(10, 2);
+        modelBuilder.Entity<SeatClass>().Property(s => s.ClassMultiplier).HasPrecision(5, 2);
     }
+
 }

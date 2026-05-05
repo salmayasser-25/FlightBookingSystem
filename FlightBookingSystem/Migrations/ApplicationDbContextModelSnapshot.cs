@@ -97,6 +97,9 @@ namespace FlightBookingSystem.Migrations
                     b.Property<bool>("DiscountApplied")
                         .HasColumnType("bit");
 
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PointsUsed")
                         .HasColumnType("int");
 
@@ -112,6 +115,8 @@ namespace FlightBookingSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("UserId");
 
@@ -131,6 +136,9 @@ namespace FlightBookingSystem.Migrations
 
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("AvailableSeats")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("BasePrice")
                         .HasPrecision(10, 2)
@@ -485,11 +493,19 @@ namespace FlightBookingSystem.Migrations
 
             modelBuilder.Entity("FlightBookingSystem.Models.Booking", b =>
                 {
+                    b.HasOne("Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Flight");
 
                     b.Navigation("User");
                 });

@@ -1,0 +1,79 @@
+﻿@model Airport
+
+@{
+    ViewData["Title"] = "Edit Airport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Edit Airport</h4>
+
+                <a href="/Admin/Airport" class="btn btn-light rounded-pill px-4">
+                    Back
+                </a>
+            </div>
+
+            <form asp-area="Admin"
+                  asp-controller="Airport"
+                  asp-action="Edit"
+                  method="post">
+
+                <input type="hidden" asp-for="AirportId" />
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Airport Name</label>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">IATA Code</label>
+                        <input asp-for="IataCode" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input asp-for="City" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Country</label>
+                        <input asp-for="Country" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Latitude</label>
+                        <input asp-for="Latitude" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Longitude</label>
+                        <input asp-for="Longitude" class="form-control" />
+                    </div>
+
+                </div>
+
+                <div class="mt-4 d-flex gap-2 justify-content-end">
+
+                    <a href="/Admin/Airport" class="btn btn-light px-4 rounded-pill">
+                        Cancel
+                    </a>
+
+                    <button class="btn btn-dark px-4 rounded-pill">
+                        Update
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

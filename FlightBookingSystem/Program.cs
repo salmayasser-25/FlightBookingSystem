@@ -12,10 +12,14 @@ namespace FlightBookingSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // DbContext
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // MVC
             builder.Services.AddControllersWithViews();
+
+            // DI
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IFlightRepository, FlightRepository>();
             builder.Services.AddScoped<IEmailService, EmailService>();
@@ -53,10 +57,10 @@ namespace FlightBookingSystem
                 name: "areas",
                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
+            // Default route
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }
