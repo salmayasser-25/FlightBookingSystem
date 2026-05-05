@@ -19,6 +19,7 @@ namespace FlightBookingSystem
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IFlightRepository, FlightRepository>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             // ?? Cookie Authentication ??????????????????????????????
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

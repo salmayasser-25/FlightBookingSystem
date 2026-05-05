@@ -1,0 +1,259 @@
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile Settings";
+    var initials = ((Model.FName.Length > 0 ? Model.FName[0].ToString() : "") +
+                    (Model.LName.Length > 0 ? Model.LName[0].ToString() : "")).ToUpper();
+}
+
+@section Styles {
+    <style>
+        body { background: var(--gray-50); }
+        .page-header {
+            padding: 100px 0 30px;
+            background: var(--primary-deep-blue);
+        }
+        .dashboard-wrapper { padding: 40px 0 80px; }
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 0;
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+        }
+        .sidebar-user {
+            text-align: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 20px;
+        }
+        .user-avatar {
+            width: 80px; height: 80px;
+            background: var(--primary-sky);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 700;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+        .avatar-edit {
+            position: absolute;
+            bottom: 0; right: 0;
+            background: var(--accent-gold);
+            color: var(--primary-deep-blue);
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li a {
+            display: flex; align-items: center;
+            padding: 12px 24px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+        .sidebar-menu li a i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            color: var(--gray-500);
+        }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            background: rgba(45, 122, 159, 0.05);
+            color: var(--primary-sky);
+            border-right: 3px solid var(--primary-sky);
+        }
+        .sidebar-menu li a.active i { color: var(--primary-sky); }
+        .dash-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+        .dash-card-title {
+            font-family: 'Gelasio', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-deep-blue);
+            margin-bottom: 24px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: var(--gray-700); }
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--gray-300);
+        }
+        .form-control:focus {
+            border-color: var(--primary-sky);
+            box-shadow: 0 0 0 3px rgba(45, 122, 159, 0.1);
+        }
+        .btn-save {
+            background: var(--primary-deep-blue);
+            color: white;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            transition: all var(--transition-fast);
+        }
+        .btn-save:hover {
+            background: var(--primary-sky);
+            transform: translateY(-2px);
+        }
+        .btn-danger-soft {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            transition: all var(--transition-fast);
+        }
+        .btn-danger-soft:hover { background: #dc3545; color: white; }
+        .toast-container { z-index: 1060; }
+        .custom-toast {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: none;
+            border-left: 5px solid transparent;
+            overflow: hidden;
+        }
+        .custom-toast.success { border-left-color: #28a745; }
+        .custom-toast.error { border-left-color: #dc3545; }
+        .field-error { color: #dc3545; font-size: 0.78rem; margin-top: 4px; display: block; }
+    </style>
+}
+
+<section class="page-header">
+    <div class="container">
+        <h2 class="text-white mb-0" style="font-family: 'Gelasio'; font-weight: 800;">Profile Settings</h2>
+    </div>
+</section>
+
+<section class="dashboard-wrapper">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar animate-fade-up">
+                    <div class="sidebar-user">
+                        <div class="user-avatar">
+                            @(string.IsNullOrEmpty(initials) ? "?" : initials)
+                            <div class="avatar-edit"><i class="bi bi-camera-fill"></i></div>
+                        </div>
+                        <h5 class="fw-bold mb-1" style="color: var(--primary-deep-blue);">@Model.FullName</h5>
+                        <p class="text-muted small mb-0">
+                            @(Model.IsAdmin ? "Admin" : "AeroFly+ Member")
+                        </p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a asp-controller="Users" asp-action="Dashboard"><i class="bi bi-grid-1x2"></i> Overview</a></li>
+                        <li><a asp-controller="Users" asp-action="MyBookings"><i class="bi bi-airplane"></i> My Flights</a></li>
+                        <li><a asp-controller="Users" asp-action="Dashboard"><i class="bi bi-star"></i> Reward Points</a></li>
+                        <li><a asp-controller="Users" asp-action="Profile" class="active"><i class="bi bi-person"></i> Profile Settings</a></li>
+                        <li><a asp-controller="Users" asp-action="DeleteAccount"><i class="bi bi-trash"></i> Delete Account</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="dash-card animate-fade-up">
+                    <h4 class="dash-card-title">Personal Information</h4>
+                    <form asp-controller="Users" asp-action="Edit" method="post" class="row g-4" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="col-12">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-0"></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label" for="FName">First Name</label>
+                            <input type="text" class="form-control" id="FName" name="FName" value="@Model.FName" required maxlength="50" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="LName">Last Name</label>
+                            <input type="text" class="form-control" id="LName" name="LName" value="@Model.LName" required maxlength="50" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="Email">Email Address</label>
+                            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" readonly style="background: var(--gray-100);" />
+                            <div class="form-text">Email changes require support — contact us to update.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Member Since</label>
+                            <input type="text" class="form-control" value="@Model.JoinedDateText" readonly style="background: var(--gray-100);" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Reward Points</label>
+                            <input type="text" class="form-control"
+                                   value="@(Model.RewardPoints.HasValue ? Model.RewardPoints.Value.ToString("N0") + " pts" : "No rewards account yet")"
+                                   readonly style="background: var(--gray-100);" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email Status</label>
+                            <input type="text" class="form-control"
+                                   value="@(Model.EmailConfirmed ? "Verified" : "Unverified")"
+                                   readonly style="background: var(--gray-100);" />
+                        </div>
+
+                        <div class="col-12 text-end mt-4">
+                            <button type="submit" class="btn-save">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="dash-card animate-fade-up">
+                    <h4 class="dash-card-title">Security &amp; Password</h4>
+                    <form asp-controller="Users" asp-action="ChangePassword" method="post" class="row g-4" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="col-12">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-0"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="CurrentPassword">Current Password</label>
+                            <input type="password" class="form-control" id="CurrentPassword" name="CurrentPassword" required autocomplete="current-password" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="NewPassword">New Password</label>
+                            <input type="password" class="form-control" id="NewPassword" name="NewPassword" required minlength="8" autocomplete="new-password" />
+                            <div class="form-text">At least 8 characters.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="ConfirmNewPassword">Confirm New Password</label>
+                            <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" required autocomplete="new-password" />
+                        </div>
+                        <div class="col-12 text-end mt-4">
+                            <button type="submit" class="btn-save">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="dash-card border" style="border-color: rgba(220,53,69,0.3) !important;">
+                    <h4 class="dash-card-title text-danger">Danger Zone</h4>
+                    <p class="text-muted small">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                    <div class="text-end">
+                        <a asp-controller="Users" asp-action="DeleteAccount" class="btn-danger-soft text-decoration-none">
+                            <i class="bi bi-trash me-1"></i> Delete Account
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
