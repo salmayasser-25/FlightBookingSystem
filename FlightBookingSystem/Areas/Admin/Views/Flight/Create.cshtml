@@ -22,7 +22,11 @@
     <div class="card shadow-sm border-0">
         <div class="card-body">
 
-            <form asp-action="Create" method="post" class="row g-3">
+            <form asp-area="Admin"
+                  asp-controller="Flight"
+                  asp-action="Create"
+                  method="post"
+                class="row g-3">
 
                 <!-- Flight Number -->
                 <div class="col-md-6">

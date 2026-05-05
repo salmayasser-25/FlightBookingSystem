@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace FlightBookingSystem.Areas.Admin.Controllers
 {
     [Area(SD.Admin_Area)]
@@ -66,20 +67,20 @@ namespace FlightBookingSystem.Areas.Admin.Controllers
             ViewBag.Airports = _context.Airports.ToList();
             return View();
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(Flight flight)
         {
-            if (ModelState.IsValid)
+            if (flight.DepartureAirportId == 0 || flight.ArrivalAirportId == 0)
             {
-                _context.Flights.Add(flight);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Airports = _context.Airports.ToList();
+                ModelState.AddModelError("", "Please select departure and arrival airports");
+                return View(flight);
             }
 
-            ViewBag.Airports = _context.Airports.ToList();
-            return View(flight);
+            _context.Flights.Add(flight);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -93,18 +94,38 @@ namespace FlightBookingSystem.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(Flight flight)
         {
-            if (ModelState.IsValid)
+            var existingFlight = _context.Flights.AsNoTracking()
+                .FirstOrDefault(f => f.FlightId == flight.FlightId);
+
+            if (existingFlight == null)
+                return NotFound();
+
+            if (flight.DepartureAirportId == 0 || flight.ArrivalAirportId == 0)
             {
-                _context.Flights.Update(flight);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Airports = _context.Airports.ToList();
+                ModelState.AddModelError("", "Please select valid airports");
+                return View(flight);
             }
 
-            ViewBag.Airports = _context.Airports.ToList();
-            return View(flight);
+            _context.Flights.Update(flight);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var flight = _context.Flights.Find(id);
+
+            if (flight == null)
+                return NotFound();
+
+            _context.Flights.Remove(flight);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 

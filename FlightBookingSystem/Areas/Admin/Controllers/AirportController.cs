@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 [Area(SD.Admin_Area)]
-[Route("Admin/[controller]/[action]")]
+
 public class AirportController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -22,29 +22,66 @@ public class AirportController : Controller
         return View(airports);
     }
 
-    // GET: /Admin/Airport/Create
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: /Admin/Airport/Create
     [HttpPost]
-    public IActionResult Create(AirportVM vm)
+    public IActionResult Create(Airport airport)
     {
-        var airport = new Airport
-        {
-            Name = vm.Name,
-            City = vm.City,
-            Country = vm.Country,
-            IataCode = vm.IataCode?.ToUpper(),
-            Latitude = vm.Latitude,
-            Longitude = vm.Longitude
-        };
+        airport.IataCode = airport.IataCode?.ToUpper();
 
         _context.Airports.Add(airport);
         _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+    [HttpGet]
+    
+    public IActionResult Edit(int id)
+    {
+        var airport = _context.Airports.Find(id);
+
+        if (airport == null)
+            return NotFound();
+
+        return View(airport);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Airport airport)
+    {
+        airport.IataCode = airport.IataCode?.ToUpper();
+
+        _context.Airports.Update(airport);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+   
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var airport = _context.Airports.Find(id);
+
+        if (airport == null)
+            return NotFound();
+
+        bool hasFlights = _context.Flights
+            .Any(f => f.DepartureAirportId == id || f.ArrivalAirportId == id);
+
+        if (hasFlights)
+        {
+            TempData["Error"] = "Cannot delete airport linked to flights!";
+            return RedirectToAction("Index");
+        }
+
+        _context.Airports.Remove(airport);
+        _context.SaveChanges();
+
+        TempData["Success"] = "Airport deleted successfully";
 
         return RedirectToAction("Index");
     }

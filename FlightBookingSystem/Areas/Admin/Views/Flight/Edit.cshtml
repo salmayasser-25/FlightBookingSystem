@@ -16,7 +16,11 @@
     <div class="card shadow-sm border-0">
         <div class="card-body">
 
-            <form asp-action="Edit" method="post" class="row g-3">
+            <form asp-area="Admin"
+                  asp-controller="Flight"
+                  asp-action="Edit"
+                  method="post"
+                  class="row g-3">
 
                 <input type="hidden" asp-for="FlightId" />
 

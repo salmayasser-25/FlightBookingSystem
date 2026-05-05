@@ -1,75 +1,72 @@
 ﻿@model Airport
 
 @{
-    ViewData["Title"] = "Add Airport";
-    ViewData["PageId"] = "airports";
+    ViewData["Title"] = "Edit Airport";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container-fluid">
 
     <div class="card shadow-sm border-0 rounded-4">
-
         <div class="card-body p-4">
 
-            <!-- HEADER -->
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold mb-0">Add New Airport</h4>
+                <h4 class="fw-bold mb-0">Edit Airport</h4>
 
                 <a href="/Admin/Airport" class="btn btn-light rounded-pill px-4">
-                    <i class="bi bi-arrow-left me-1"></i> Back
+                    Back
                 </a>
             </div>
 
-            <!-- FORM -->
             <form asp-area="Admin"
-           asp-controller="Airport"
-           asp-action="Create"
-           method="post">
+                  asp-controller="Airport"
+                  asp-action="Edit"
+                  method="post">
+
+                <input type="hidden" asp-for="AirportId" />
 
                 <div class="row g-3">
 
                     <div class="col-md-6">
                         <label class="form-label">Airport Name</label>
-                        <input name="Name" class="form-control rounded-3" placeholder="Heathrow Airport" />
+                        <input asp-for="Name" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">IATA Code</label>
-                        <input name="IataCode" class="form-control rounded-3 text-uppercase" placeholder="LHR" />
+                        <input asp-for="IataCode" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">City</label>
-                        <input name="City" class="form-control rounded-3" placeholder="London" />
+                        <input asp-for="City" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Country</label>
-                        <input name="Country" class="form-control rounded-3" placeholder="United Kingdom" />
+                        <input asp-for="Country" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Latitude</label>
-                        <input name="Latitude" type="number" step="any" class="form-control rounded-3" />
+                        <input asp-for="Latitude" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Longitude</label>
-                        <input name="Longitude" type="number" step="any" class="form-control rounded-3" />
+                        <input asp-for="Longitude" class="form-control" />
                     </div>
 
                 </div>
 
-                <!-- ACTIONS -->
-                <div class="d-flex justify-content-end gap-2 mt-4">
+                <div class="mt-4 d-flex gap-2 justify-content-end">
 
-                    <a href="/Admin/Airport" class="btn btn-light rounded-pill px-4">
+                    <a href="/Admin/Airport" class="btn btn-light px-4 rounded-pill">
                         Cancel
                     </a>
 
-                    <button type="submit" class="btn btn-dark rounded-pill px-4">
-                        <i class="bi bi-check2-circle me-1"></i> Save Airport
+                    <button class="btn btn-dark px-4 rounded-pill">
+                        Update
                     </button>
 
                 </div>

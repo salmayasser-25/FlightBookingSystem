@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightBookingSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260414181235_InitialModels")]
-    partial class InitialModels
+    [Migration("20260505151050_InitialClean")]
+    partial class InitialClean
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,6 +100,9 @@ namespace FlightBookingSystem.Migrations
                     b.Property<bool>("DiscountApplied")
                         .HasColumnType("bit");
 
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PointsUsed")
                         .HasColumnType("int");
 
@@ -115,6 +118,8 @@ namespace FlightBookingSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("FlightId");
 
                     b.HasIndex("UserId");
 
@@ -134,6 +139,9 @@ namespace FlightBookingSystem.Migrations
 
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("AvailableSeats")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("BasePrice")
                         .HasPrecision(10, 2)
@@ -464,11 +472,19 @@ namespace FlightBookingSystem.Migrations
 
             modelBuilder.Entity("Booking", b =>
                 {
+                    b.HasOne("Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Flight");
 
                     b.Navigation("User");
                 });
