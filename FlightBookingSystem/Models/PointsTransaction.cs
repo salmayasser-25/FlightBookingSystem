@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace FlightBookingSystem.Models;
+using System.ComponentModel.DataAnnotations;
 
 public class PointsTransaction
 {

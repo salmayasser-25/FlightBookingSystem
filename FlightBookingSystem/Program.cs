@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using FlightBookingSystem.Repository;
+using FlightBookingSystem.Repository.IRepository;
+using FlightBookingSystem.Services;
+
 namespace FlightBookingSystem
 {
     public class Program
@@ -18,6 +22,19 @@ namespace FlightBookingSystem
             // DI
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            // ?? Cookie Authentication ??????????????????????????????
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Identity/Account/Login";
+                    options.LogoutPath = "/Identity/Account/Logout";
+                    options.AccessDeniedPath = "/Identity/Account/Login";
+                    options.Cookie.Name = "FlightBooking.Auth";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                    options.SlidingExpiration = true;
+                });
 
             var app = builder.Build();
 
@@ -29,12 +46,13 @@ namespace FlightBookingSystem
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
+            app.UseAuthentication();   // ? ???? ??? UseAuthorization
             app.UseAuthorization();
 
-            // Areas route
+            app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");

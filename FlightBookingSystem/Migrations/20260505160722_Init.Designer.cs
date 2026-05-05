@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightBookingSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505160722_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace FlightBookingSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Admin", b =>
+            modelBuilder.Entity("Admin", b =>
                 {
                     b.Property<int>("AdminId")
                         .ValueGeneratedOnAdd()
@@ -48,7 +51,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Airport", b =>
+            modelBuilder.Entity("Airport", b =>
                 {
                     b.Property<int>("AirportId")
                         .ValueGeneratedOnAdd()
@@ -83,7 +86,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Airports");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -123,7 +126,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Flight", b =>
+            modelBuilder.Entity("Flight", b =>
                 {
                     b.Property<int>("FlightId")
                         .ValueGeneratedOnAdd()
@@ -167,7 +170,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.FlightRule", b =>
+            modelBuilder.Entity("FlightRule", b =>
                 {
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
@@ -185,7 +188,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("FlightRules");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.FlightSeatClass", b =>
+            modelBuilder.Entity("FlightSeatClass", b =>
                 {
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
@@ -207,7 +210,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("FlightSeatClasses");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Passenger", b =>
+            modelBuilder.Entity("Passenger", b =>
                 {
                     b.Property<int>("PassengerId")
                         .ValueGeneratedOnAdd()
@@ -244,7 +247,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Passengers");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Payment", b =>
+            modelBuilder.Entity("Payment", b =>
                 {
                     b.Property<int>("PayId")
                         .ValueGeneratedOnAdd()
@@ -282,7 +285,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.PointsTransaction", b =>
+            modelBuilder.Entity("PointsTransaction", b =>
                 {
                     b.Property<int>("TransId")
                         .ValueGeneratedOnAdd()
@@ -313,7 +316,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("PointsTransactions");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.PriceRule", b =>
+            modelBuilder.Entity("PriceRule", b =>
                 {
                     b.Property<int>("RuleId")
                         .ValueGeneratedOnAdd()
@@ -340,7 +343,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("PriceRules");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.RewardAccount", b =>
+            modelBuilder.Entity("RewardAccount", b =>
                 {
                     b.Property<int>("AccountId")
                         .ValueGeneratedOnAdd()
@@ -362,7 +365,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("RewardAccounts");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.SeatClass", b =>
+            modelBuilder.Entity("SeatClass", b =>
                 {
                     b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
@@ -383,7 +386,7 @@ namespace FlightBookingSystem.Migrations
                     b.ToTable("SeatClasses");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Ticket", b =>
+            modelBuilder.Entity("Ticket", b =>
                 {
                     b.Property<int>("TicketId")
                         .ValueGeneratedOnAdd()
@@ -439,15 +442,6 @@ namespace FlightBookingSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmailConfirmToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("EmailConfirmTokenExpiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -456,42 +450,27 @@ namespace FlightBookingSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OtpCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("OtpExpiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("OtpVerified")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResetPasswordToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetPasswordTokenExpiry")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Admin", b =>
+            modelBuilder.Entity("Admin", b =>
                 {
                     b.HasOne("User", "User")
                         .WithOne("Admin")
-                        .HasForeignKey("FlightBookingSystem.Models.Admin", "UserId")
+                        .HasForeignKey("Admin", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.HasOne("Flight", "Flight")
                         .WithMany()
@@ -510,15 +489,15 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Flight", b =>
+            modelBuilder.Entity("Flight", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.Airport", "ArrivalAirport")
+                    b.HasOne("Airport", "ArrivalAirport")
                         .WithMany("ArrivalFlights")
                         .HasForeignKey("ArrivalAirportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FlightBookingSystem.Models.Airport", "DepartureAirport")
+                    b.HasOne("Airport", "DepartureAirport")
                         .WithMany("DepartureFlights")
                         .HasForeignKey("DepartureAirportId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -529,15 +508,15 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("DepartureAirport");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.FlightRule", b =>
+            modelBuilder.Entity("FlightRule", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.Flight", "Flight")
+                    b.HasOne("Flight", "Flight")
                         .WithMany("FlightRules")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightBookingSystem.Models.PriceRule", "PriceRule")
+                    b.HasOne("PriceRule", "PriceRule")
                         .WithMany("FlightRules")
                         .HasForeignKey("PriceRuleRuleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -548,15 +527,15 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("PriceRule");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.FlightSeatClass", b =>
+            modelBuilder.Entity("FlightSeatClass", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.SeatClass", "SeatClass")
+                    b.HasOne("SeatClass", "SeatClass")
                         .WithMany("FlightSeatClasses")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightBookingSystem.Models.Flight", "Flight")
+                    b.HasOne("Flight", "Flight")
                         .WithMany("FlightSeatClasses")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -567,15 +546,15 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("SeatClass");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Passenger", b =>
+            modelBuilder.Entity("Passenger", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.Booking", "Booking")
+                    b.HasOne("Booking", "Booking")
                         .WithMany("Passengers")
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightBookingSystem.Models.FlightSeatClass", "FlightSeatClass")
+                    b.HasOne("FlightSeatClass", "FlightSeatClass")
                         .WithMany("Passengers")
                         .HasForeignKey("FlightId", "ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -586,20 +565,20 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("FlightSeatClass");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Payment", b =>
+            modelBuilder.Entity("Payment", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.Booking", "Booking")
+                    b.HasOne("Booking", "Booking")
                         .WithOne("Payment")
-                        .HasForeignKey("FlightBookingSystem.Models.Payment", "BookingId")
+                        .HasForeignKey("Payment", "BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Booking");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.PointsTransaction", b =>
+            modelBuilder.Entity("PointsTransaction", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.RewardAccount", "RewardAccount")
+                    b.HasOne("RewardAccount", "RewardAccount")
                         .WithMany("Transactions")
                         .HasForeignKey("RewardAccountAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -608,28 +587,28 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("RewardAccount");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.RewardAccount", b =>
+            modelBuilder.Entity("RewardAccount", b =>
                 {
                     b.HasOne("User", "User")
                         .WithOne("RewardAccount")
-                        .HasForeignKey("FlightBookingSystem.Models.RewardAccount", "UserId")
+                        .HasForeignKey("RewardAccount", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Ticket", b =>
+            modelBuilder.Entity("Ticket", b =>
                 {
-                    b.HasOne("FlightBookingSystem.Models.Booking", "Booking")
+                    b.HasOne("Booking", "Booking")
                         .WithMany("Tickets")
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FlightBookingSystem.Models.Passenger", "Passenger")
+                    b.HasOne("Passenger", "Passenger")
                         .WithOne("Ticket")
-                        .HasForeignKey("FlightBookingSystem.Models.Ticket", "PassengerId")
+                        .HasForeignKey("Ticket", "PassengerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -638,14 +617,14 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("Passenger");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Airport", b =>
+            modelBuilder.Entity("Airport", b =>
                 {
                     b.Navigation("ArrivalFlights");
 
                     b.Navigation("DepartureFlights");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.Navigation("Passengers");
 
@@ -654,34 +633,34 @@ namespace FlightBookingSystem.Migrations
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Flight", b =>
+            modelBuilder.Entity("Flight", b =>
                 {
                     b.Navigation("FlightRules");
 
                     b.Navigation("FlightSeatClasses");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.FlightSeatClass", b =>
+            modelBuilder.Entity("FlightSeatClass", b =>
                 {
                     b.Navigation("Passengers");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.Passenger", b =>
+            modelBuilder.Entity("Passenger", b =>
                 {
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.PriceRule", b =>
+            modelBuilder.Entity("PriceRule", b =>
                 {
                     b.Navigation("FlightRules");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.RewardAccount", b =>
+            modelBuilder.Entity("RewardAccount", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("FlightBookingSystem.Models.SeatClass", b =>
+            modelBuilder.Entity("SeatClass", b =>
                 {
                     b.Navigation("FlightSeatClasses");
                 });
